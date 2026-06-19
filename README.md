@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vertical Video Feed Test
 
-## Getting Started
+Dự án này là bài kiểm tra đầu vào xây dựng giao diện xem video cuộn dọc (Vertical Scroll Feed) tương tự như TikTok, sử dụng **Next.js (App Router)** và **TypeScript**.
 
-First, run the development server:
+## Các tính năng chính
+
+- **Giao diện cuộn dọc:** Responsive (toàn màn hình trên mobile, tỷ lệ 9:16 ở giữa màn hình trên PC). Hiệu ứng cuộn `snap-scroll` mượt mà cho từng video.
+- **Auto-play on scroll (Bonus):** Tự động phát video khi cuộn tới và nằm trong tầm nhìn (từ 60% diện tích trở lên), tự động dừng khi bị cuộn qua.
+- **Thao tác thủ công:** Click vào màn hình video để Play/Pause.
+- **State Mạng Xã Hội (Bonus):** Tương tác với nút Like để thả tim và thay đổi số lượng.
+- **Thanh điều hướng (Bonus):** Có Sidebar cho màn hình lớn (PC) và Bottom Navigation cho màn hình di động.
+
+## Giải thích logic Play/Pause khi cuộn trang (Yêu cầu bài test)
+
+Logic tự động Play/Pause khi cuộn trang được xử lý thông qua **Intersection Observer API** kết hợp với **React hooks (`useEffect`, `useRef`)** trong component `VideoCard`:
+
+1. **Khởi tạo Observer:** Một Intersection Observer được thiết lập để theo dõi `cardRef` (container của video).
+2. **Threshold:** Sử dụng `threshold: [0, 0.6, 1]`. Tức là callback sẽ được kích hoạt khi phần trăm diện tích của video hiển thị trên viewport đạt 0%, 60% và 100%.
+3. **Điều kiện Play:** Nếu `entry.isIntersecting` là true VÀ `entry.intersectionRatio >= 0.6` (video chiếm ít nhất 60% viewport), video sẽ tự động gọi hàm `.play()`.
+4. **Điều kiện Pause:** Khi video trượt ra khỏi viewport (tỷ lệ hiển thị giảm xuống dưới 60%), nó sẽ gọi `.pause()`.
+5. **Đồng bộ hóa các video (Video Registry):** Component cha `VideoFeed` quản lý một danh sách (`Map`) các video đang tồn tại. Khi một video bắt đầu phát, hàm `handlePlay` sẽ được gọi để pause tất cả các video khác trong danh sách, đảm bảo chỉ có tối đa 1 video chạy tại một thời điểm.
+6. **Bảo vệ thao tác người dùng:** Nếu người dùng chủ động click để Pause, cờ `userPausedRef` sẽ được bật lên để ngăn Intersection Observer tự động phát lại (cho đến khi cuộn hẳn sang video khác).
+
+## Hướng dẫn cài đặt & chạy thử
+
+Cài đặt dependencies:
+
+```bash
+npm install
+```
+
+Chạy development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Mở [http://localhost:3000](http://localhost:3000) trên trình duyệt của bạn để xem kết quả.
