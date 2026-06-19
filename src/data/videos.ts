@@ -4,33 +4,33 @@ export const videos: Video[] = [
   {
     id: "1",
     videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    authorName: "@natureclips",
-    description: "Epic drone shots over mountain ranges at golden hour 🌄",
+      "https://www.w3schools.com/html/mov_bbb.mp4",
+    authorName: "@w3schools",
+    description: "Big Buck Bunny - W3Schools demo 🐰",
     likesCount: 12400,
   },
   {
     id: "2",
     videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    authorName: "@animeworld",
-    description: "Classic animation — still hits different in 2026 🐰",
+      "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    authorName: "@mdnwebdocs",
+    description: "Friday vibe from MDN Web Docs 🎸",
     likesCount: 89200,
   },
   {
     id: "3",
     videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    authorName: "@shortfilm",
-    description: "Mind-bending short film you need to watch twice 🎬",
+      "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    authorName: "@sintel",
+    description: "Sintel Trailer - W3C Demo 🎬",
     likesCount: 45600,
   },
   {
     id: "4",
     videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    authorName: "@travelvibes",
-    description: "POV: you booked a one-way ticket to paradise ✈️",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    authorName: "@natureclips",
+    description: "Epic drone shots over mountain ranges at golden hour 🌄",
     likesCount: 32100,
   },
   {
