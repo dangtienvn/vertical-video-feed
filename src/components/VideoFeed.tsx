@@ -1,12 +1,15 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { videos } from "@/data/videos";
 import VideoCard from "./VideoCard";
 
 export default function VideoFeed() {
   // Registry of all video elements — used to pause others when one starts playing
   const videoRegistry = useRef<Map<string, HTMLVideoElement>>(new Map());
+  
+  // Global mute state: start muted to comply with browser autoplay policies
+  const [globalMuted, setGlobalMuted] = useState(true);
 
   const registerVideo = useCallback(
     (id: string, el: HTMLVideoElement | null) => {
@@ -27,6 +30,10 @@ export default function VideoFeed() {
     });
   }, []);
 
+  const handleToggleMute = useCallback(() => {
+    setGlobalMuted((prev) => !prev);
+  }, []);
+
   return (
     <div className="h-screen w-full overflow-y-scroll scroll-smooth snap-y snap-mandatory">
       {videos.map((video) => (
@@ -35,6 +42,8 @@ export default function VideoFeed() {
           video={video}
           onPlay={handlePlay}
           registerVideo={registerVideo}
+          globalMuted={globalMuted}
+          onToggleMute={handleToggleMute}
         />
       ))}
     </div>
